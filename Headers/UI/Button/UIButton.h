@@ -30,8 +30,8 @@ public:
     virtual void press(void) = 0;
     virtual void hover(void) = 0;
     virtual void release(void) = 0;
-    virtual void set_position(Vector2f position);
-    virtual void set_size(Vector2f size);
+    virtual void set_position(Vector2f position) = 0;
+    virtual void set_size(Vector2f size) = 0;
 
     static void attach_sound(const std::string & sound_path);
 
