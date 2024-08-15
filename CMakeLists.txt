@@ -17,8 +17,11 @@ add_executable(AsteroidBelt Sources/main.cpp
         Sources/Registry.cpp
         Headers/Scene/Scene.h
         Headers/Scene/MakeScene.h
-        Headers/Scene/MakeScene.h
         Sources/MakeScene.cpp
+        Sources/Scene.cpp
+        Headers/UI/Button/UIDynamicButton.h
+        Headers/UI/Button/UIStaticButton.h
+        Sources/UIStaticButton.cpp
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)

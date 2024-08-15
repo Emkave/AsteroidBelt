@@ -7,11 +7,11 @@
 
 class Scene {
 private:
-    std::list<UIButton> buttons;
+    std::list<std::unique_ptr<UIButton>> buttons;
 
 
 public:
-    void load(void);
+    void render(void);
 };
 
 

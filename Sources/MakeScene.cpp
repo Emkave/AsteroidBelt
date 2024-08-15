@@ -2,5 +2,5 @@
 #include "../Headers/UI/Button/UIButton.h"
 
 bool MakeScene::MainMenu(void) {
-
+    return true;
 }
