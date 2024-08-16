@@ -3,6 +3,11 @@
 #include <SFML/Window/Event.hpp>
 #include <vld.h>
 #include <iostream>
+#include <stack>
+#include "../Headers/Scene/Scene.h"
+#include "../Headers/Scene/MakeScene.h"
+
+std::stack<std::unique_ptr<Scene>> scene_stack;
 
 
 int main(void) {
@@ -10,28 +15,35 @@ int main(void) {
     std::cin.tie(nullptr);
     std::cout.tie(nullptr);
 
-    Registry::window = new RenderWindow(VideoMode(Registry::WIN_LENGHT, Registry::WIN_HEIGHT), "Asteroid Belt", Style::Titlebar | Style::Close);
+    Registry::window.store(new RenderWindow(VideoMode(Registry::WIN_LENGHT, Registry::WIN_HEIGHT), "Asteroid Belt", Style::None | Style::Close), std::memory_order_release);
     Registry::event.store(new Event(), std::memory_order_release);
-    Registry::window->setFramerateLimit(Registry::FPS);
+    Registry::window.load(std::memory_order_acquire)->setFramerateLimit(Registry::FPS);
 
-    while (Registry::window->isOpen()) {
+    scene_stack.emplace(MakeScene::MainMenu());
 
+    while (Registry::window.load(std::memory_order_acquire)->isOpen()) {
+        RenderWindow * window_ptr = Registry::window.load(std::memory_order_acquire);
         Event * event_ptr = Registry::event.load(std::memory_order_acquire);
-        while (Registry::window->pollEvent(*event_ptr)) {
+
+        while (window_ptr->pollEvent(*event_ptr)) {
             if (event_ptr->type == Event::Closed) {
-                Registry::window->close();
+                window_ptr->close();
             }
         }
 
-        Registry::window->clear();
-
-        Registry::window->display();
+        window_ptr->clear(Color::Black);
+        scene_stack.top()->render();
+        window_ptr->display();
     }
 
 
     end:
-    delete Registry::window;
+    delete Registry::window.load(std::memory_order_acquire);
     delete Registry::event.load(std::memory_order_acquire);
+
+    for (size_t i=0; i<scene_stack.size(); i++) {
+        scene_stack.pop();
+    }
 
     return 0;
 }

@@ -1,12 +1,14 @@
 #ifndef ASTEROIDBELT_MAKESCENE_H
 #define ASTEROIDBELT_MAKESCENE_H
+#include "Scene.h"
+#include <memory>
 
 class MakeScene {
 private:
 
 public:
-    static bool MainMenu(void);
-
+    static std::unique_ptr<Scene> MainMenu(void);
+    static std::unique_ptr<Scene> Options(void);
 };
 
 

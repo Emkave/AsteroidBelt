@@ -12,6 +12,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include "../../Registry.h"
 #include <memory>
+#include <variant>
 
 using namespace sf;
 
@@ -28,15 +29,16 @@ protected:
     inline bool is_mouse_over_shape(void);
     inline unsigned short __get_state(void);
 
-    bool is_pressed = false;
-    bool is_hovered = false;
-    void (*action)(void);
+    void (*action)(void) = nullptr;
 
 public:
+    explicit UIButton(char c);
+
     virtual void set_position(Vector2f position) = 0;
     virtual void set_size(Vector2f size) = 0;
     virtual void set_size(unsigned short radius) = 0;
     virtual inline void draw(void) = 0;
+
 
     static void attach_sound(const std::string & sound_path);
     void attach_action(void (*f)(void));
@@ -44,6 +46,7 @@ public:
     void set_base_color(Color color);
     void set_hover_color(Color color);
     void set_press_color(Color color);
+    std::variant<float, Vector2f> get_size(void);
 };
 
 

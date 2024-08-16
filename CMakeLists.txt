@@ -9,19 +9,19 @@ set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-add_executable(AsteroidBelt Sources/main.cpp
+add_executable(AsteroidBelt
+        Sources/main.cpp
         Sources/Registry.cpp
         Sources/UIButton.cpp
-        Headers/UI/Button/UIButton.h
-        Headers/Registry.h
-        Sources/Registry.cpp
-        Headers/Scene/Scene.h
-        Headers/Scene/MakeScene.h
         Sources/MakeScene.cpp
         Sources/Scene.cpp
-        Headers/UI/Button/UIDynamicButton.h
-        Headers/UI/Button/UIStaticButton.h
         Sources/UIStaticButton.cpp
+
+        Headers/UI/Button/UIButton.h
+        Headers/Registry.h
+        Headers/Scene/Scene.h
+        Headers/Scene/MakeScene.h
+        Headers/UI/Button/UIStaticButton.h
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)
